@@ -3,9 +3,11 @@ AWS.config({
     :secret_access_key => 'wDI0XzC75IbSDXMGI/rmyvBlYicR0SlOF6ubkkRF',
   })
 
+# Dynamic Prefixes for Databases by Environment
 AWS::Record.domain_prefix = ["apiara_", Rails.env, "_"].join("")
 AWS::Record.table_prefix = ["apiara_", Rails.env, "_"].join("")
 
+#Monkey Patch for custom DynamoDB HashKey
 module AWS
   module Record
     module AbstractBase
