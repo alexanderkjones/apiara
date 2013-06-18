@@ -3,6 +3,18 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.8'
 gem 'aws-sdk'
 
+#devise lets us set up user registration
+gem 'devise'
+
+#need orm_adapter_aws to use devise with SimpleDB
+gem 'orm_adapter_aws'
+
+#allows us to do validates_uniqueness_of without an ugly hack for devise
+gem 'simple_unique'
+
+#get queries and sorting working correctly on datetime_attrs
+gem 'simple_date_fix'
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
