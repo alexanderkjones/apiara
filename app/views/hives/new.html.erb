@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>New hive</h1>
+
+<%= form_for(@hive) do |f| %>
+  <% if @hive.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@hive.errors.count, "error") %> prohibited this hive from being saved:</h2>
+
+      <ul>
+      <% @hive.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <p>This form will be filled out with more stuff later.<br/>
+    For now, userid is handled in the controller (that<br/>
+    never needs to be seen by the user), and there is no<br/>
+    geolocation stuff happening.</p>
+  
+  <!-- maybe make this a dropdown of all available devices? -->
+  <div><%= f.label :deviceid %><br />
+  <%= f.text_field :deviceid, :autofocus => true %></div>
+
+  <div><%= f.label :details %><br />
+  <%= f.text_field :details %></div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<%= link_to 'Back', hives_path %>

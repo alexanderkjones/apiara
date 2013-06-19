@@ -1,5 +1,8 @@
 class User < AWS::Record::Model
   
+  string_attr :first_name
+  string_attr :last_name
+  
   string_attr :email
   string_attr :encrypted_password
 
@@ -43,15 +46,5 @@ class User < AWS::Record::Model
   # :lockable, :timeouttable, :omniauthable
   # :recoverable, :rememberable
   devise :database_authenticatable, :registerable, :trackable,
-         :validatable
-  
-  # # Include default devise modules. Others available are:
-  # # :token_authenticatable, :confirmable,
-  # # :lockable, :timeoutable and :omniauthable
-  # devise :database_authenticatable, :registerable,
-         # :recoverable, :rememberable, :trackable, :validatable
-# 
-  # # Setup accessible (or protected) attributes for your model
-  # attr_accessible :email, :password, :password_confirmation, :remember_me
-  # # attr_accessible :title, :body
+         :validatable  
 end

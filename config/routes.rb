@@ -1,5 +1,9 @@
 Apiara::Application.routes.draw do
 
+  resources :devices
+
+  resources :hives
+
   devise_for :users
 
   #get "home/index"

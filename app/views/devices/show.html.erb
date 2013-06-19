@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+ 
+<p>
+  <b>Owner:</b>
+  <%= @device.userid %>
+</p>
+ 
+<p>
+  <b>Device ID:</b>
+  <%= @device.id %>
+</p>
+ 
+<p>
+  <b>Attached Hive ID:</b>
+  <%= @device.hiveid %>
+</p>
+ 
+<p>
+  <b>State:</b>
+  <%= @device.state %>
+</p>
+
+<p>
+  <b>Version:</b>
+  <%= @device.version %>
+</p>
+
+<p>
+  <b>Details:</b>
+  <%= @device.details %>
+</p>
+ 
+<%= link_to 'Back', devices_path %>
