@@ -46,5 +46,5 @@ class User < AWS::Record::Model
   # :lockable, :timeouttable, :omniauthable
   # :recoverable, :rememberable
   devise :database_authenticatable, :registerable, :trackable,
-         :validatable  
+         :validatable
 end
