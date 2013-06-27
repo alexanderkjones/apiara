@@ -1,0 +1,17 @@
+<%= form_for(@hive_day) do |f| %>
+  <% if @hive_day.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@hive_day.errors.count, "error") %> prohibited this hive_day from being saved:</h2>
+
+      <ul>
+      <% @hive_day.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

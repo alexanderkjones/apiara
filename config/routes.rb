@@ -1,5 +1,7 @@
 Apiara::Application.routes.draw do
 
+  resources :hive_days
+
   resources :devices
 
   resources :hives
