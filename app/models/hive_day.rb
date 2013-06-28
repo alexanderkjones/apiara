@@ -1,6 +1,6 @@
 class HiveDay < AWS::Record::HashModel
-  string_attr :id #HashKey
-  integer_attr :date #RangeKey
+  string_attr :hiveid #HashKey
+  datetime_attr :date #RangeKey
   
   integer_attr :population #counter
   integer_attr :population_cumulative #today's pop + yesterday's population_cumulative
