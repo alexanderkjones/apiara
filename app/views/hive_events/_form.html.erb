@@ -1,0 +1,17 @@
+<%= form_for(@hive_event) do |f| %>
+  <% if @hive_event.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@hive_event.errors.count, "error") %> prohibited this hive_event from being saved:</h2>
+
+      <ul>
+      <% @hive_event.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
