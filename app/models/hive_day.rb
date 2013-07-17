@@ -11,7 +11,6 @@ class HiveDay < AWS::Record::HashModel
   
   string_attr :data_snapshots #we can store the data snapshots as a string. first, we convert to json, then to string
   
-  
   def self.daily_tasks(hive_id)
     day_points = get_day_points(hive_id)
     #12am to 5am
@@ -27,7 +26,7 @@ class HiveDay < AWS::Record::HashModel
     production = calc_production(day_points) - night_evaporation
 
     #create snapshots for display
-    snapshots = create_snapshots(day_points, 50)
+    snapshots = create_snapshots(day_points, 100)
 
     #table connection stuff
     db = AWS::DynamoDB.new
@@ -108,13 +107,8 @@ class HiveDay < AWS::Record::HashModel
   
   def self.calc_population(day_points)
     # subtract minimum weight of the day from beginning of the day's weight to get population
-    weight_array = []
-    (0..(day_points.size-1)).each do |f|
-      weight_array.push(day_points[f]["weight"])
-    end
-    
     starting_weight = day_points[60]["weight"] #5am
-    min_weight = day_points[weight_array.index(weight_array.min)]["weight"]
+    min_weight = get_day_min(day_points)
     
     return starting_weight - min_weight
   end
@@ -126,13 +120,8 @@ class HiveDay < AWS::Record::HashModel
   
   def self.calc_production(day_points)
     # subtract beginning of the day from end of the day's weight to get today's production
-    weight_array = []
-    (0..(day_points.size-1)).each do |f|
-      weight_array.push(day_points[f]["weight"])
-    end
-    
     starting_weight = day_points[60]["weight"] #5am
-    end_weight = day_points[weight_array.index(weight_array.max)]["weight"]
+    end_weight = get_day_max(day_points)
     
     return end_weight - starting_weight
   end
@@ -148,8 +137,7 @@ class HiveDay < AWS::Record::HashModel
     return (population_cumulative > max_population) ? population_cumulative : max_population
   end
   
-  # this is imperfect... arrays are coming in JUST too small or JUST too big
-  # fix in here for too big, working out solution for too small
+  #method written assuming 100 snapshots
   def self.create_snapshots(day_points, how_many_points)
     #create snapshots to use for display, takes the day_points array and how many points to return
     factor = day_points.size.to_f / how_many_points.to_f
@@ -157,24 +145,42 @@ class HiveDay < AWS::Record::HashModel
     factor = factor.round
     
     array = []
+    three_piece_array = []
+    #since loop below creates only 98 points, need to add 2
+    #so we'll add the midway point and 2 points after that (144 and 146)
     (0..(day_points.size-1)).each do |f|
-      if ((f-1) % factor) == 0 || f == 0 || f == (day_points.size-1)
+      if ((f-1) % factor) == 0 || f == 0 || f == (day_points.size-1) || f == (day_points.size / 2) || f == ((day_points.size / 2) + 2)
         array.push(day_points[f])
       end
     end
     
-    #if array is too big, pop off last item
-    if array.size > how_many_points
-      array.pop
-    end
+    # add beginning, midday, and end of day weights at the end of the snapshot
+    three_piece_array.push(day_points[60]["weight"].to_f) #changeable if the resolution for daily points gets higher
+    three_piece_array.push(get_day_min(day_points))
+    three_piece_array.push(get_day_max(day_points))
     
-    #if array is still too big, pop off the first item
-    if array.size > how_many_points
-      array = array.reverse
-      array.pop
-      array = array.reverse
-    end
+    array.push(three_piece_array)
     
     return array.to_json.to_s
+  end
+  
+  # get the minimum weight for the day
+  def self.get_day_min(day_points)
+    weight_array = []
+    (0..(day_points.size-1)).each do |f|
+      weight_array.push(day_points[f]["weight"])
+    end
+    
+    return day_points[weight_array.index(weight_array.min)]["weight"]    
+  end
+
+  # get the maximum weight for the day
+  def self.get_day_max(day_points)
+    weight_array = []
+    (0..(day_points.size-1)).each do |f|
+      weight_array.push(day_points[f]["weight"])
+    end
+    
+    return day_points[weight_array.index(weight_array.max)]["weight"]
   end
 end
