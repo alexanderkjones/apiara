@@ -72,7 +72,7 @@ class HiveDay < AWS::Record::HashModel
     range_high = Time.local(1.day.ago.year,1.day.ago.month,1.day.ago.day,23,59,59).to_i
     
     #top one uses sample data, bottom one will be for production
-    collection = table.items.query(:hash_value => hive_id, :range_value => 1366430400..1366516799, :select => [:date_time, :weight])
+    collection = table.items.query(:hash_value => hive_id, :range_value => 1366430400..1366516799, :select => [:date_time, :weight, :event_tag])
 #    collection = table.items.query(:hash_value => hive_id, :range_value => range_low..range_high, :select => [:date_time, :weight])
 
     array = []
