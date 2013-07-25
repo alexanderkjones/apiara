@@ -1,21 +1,27 @@
-<h1>Listing hive_days</h1>
+<h2>All Hive Days</h2>
 
 <table>
   <tr>
-    <th></th>
-    <th></th>
+    <th>Hive ID</th>
+    <th>Date</th>
+    <th>Population</th>
+    <th>Population Cumulative</th>
+    <th>Production</th>
+    <th>Production Cumulative</th>
     <th></th>
   </tr>
 
 <% @hive_days.each do |hive_day| %>
   <tr>
-    <td><%= link_to 'Show', hive_day %></td>
-    <td><%= link_to 'Edit', edit_hive_day_path(hive_day) %></td>
-    <td><%= link_to 'Destroy', hive_day, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= hive_day.id %></td>
+    <td><%= Time.at(hive_day.date_time.to_i) %></td>
+    <td><%= hive_day.population %></td>
+    <td><%= hive_day.population_cumulative %></td>
+    <td><%= hive_day.production %></td>
+    <td><%= hive_day.production_cumulative %></td>
+    <td><%= link_to 'Show', hive_days_range_path(hive_day.id, hive_day.date_time, hive_day.date_time) %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
-
-<%= link_to 'New Hive day', new_hive_day_path %>

@@ -2,7 +2,10 @@ Apiara::Application.routes.draw do
 
   resources :hive_events
 
-  resources :hive_days
+#  resources :hive_days
+
+  match 'hivedays', :to => 'hive_days#index'
+  match 'hivedays/:hiveid/:datetime_low/:datetime_high', :to => 'hive_days#hive_days_range', :as => 'hive_days_range'
 
   resources :devices
 
