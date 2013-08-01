@@ -1,8 +1,17 @@
 class HivesController < ApplicationController
-  # GET /hives
-  # GET /hives.json
-  def index
+  before_filter :authenticate_user!, :except => [:all_hives, :show]
+
+  def all_hives
     @hives = Hive.all
+
+    respond_to do |format|
+      format.html # all_hives.html.erb
+      format.json { render json: @hives }
+    end
+  end
+
+  def index
+    @hives = Hive.find(:all, :where => {:userid => current_user.id})
 
     respond_to do |format|
       format.html # index.html.erb

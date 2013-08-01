@@ -8,10 +8,13 @@ Apiara::Application.routes.draw do
   match 'hivedays/:hiveid/:datetime_low/:datetime_high', :to => 'hive_days#hive_days_range', :as => 'hive_days_range'
 
   resources :devices
+  match 'all_devices', :to => 'devices#all_devices'
 
   resources :hives
+  match 'all_hives', :to => 'hives#all_hives'
 
   devise_for :users
+  match 'users', :to => 'users#index'
 
   #get "home/index"
   

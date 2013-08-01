@@ -1,8 +1,17 @@
 class DevicesController < ApplicationController
-  # GET /devices
-  # GET /devices.json
-  def index
+  before_filter :authenticate_user!, :except => [:all_devices, :show]
+
+  def all_devices
     @devices = Device.all
+
+    respond_to do |format|
+      format.html # all_devices.html.erb
+      format.json { render json: @devices }
+    end
+  end
+
+  def index
+    @devices = Device.find(:all, :where => {:userid => current_user.id})
 
     respond_to do |format|
       format.html # index.html.erb
@@ -10,8 +19,6 @@ class DevicesController < ApplicationController
     end
   end
 
-  # GET /devices/1
-  # GET /devices/1.json
   def show
     @device = Device.find(params[:id])
 
