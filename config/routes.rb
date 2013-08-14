@@ -6,6 +6,7 @@ Apiara::Application.routes.draw do
 
   match 'hivedays', :to => 'hive_days#index'
   match 'hivedays/:hiveid/:datetime_low/:datetime_high', :to => 'hive_days#hive_days_range', :as => 'hive_days_range'
+  match 'hivedays/dash', :to => 'hive_days#dash', :as => 'hive_days_dash'
 
   resources :devices
   match 'all_devices', :to => 'devices#all_devices'
@@ -15,6 +16,8 @@ Apiara::Application.routes.draw do
 
   devise_for :users
   match 'users', :to => 'users#index'
+  
+  match 'data_points', :to => 'data_points#index'
 
   #get "home/index"
   

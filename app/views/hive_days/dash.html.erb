@@ -1,0 +1,33 @@
+<h2>Hive Day Dash</h2>
+<b>Hive ID:</b> <%= @the_hash_key %><br/><br/>
+
+<b>Date:</b> <%= Time.at(@hive_day['date_time'].to_i) %><br/>
+<b>Population:</b> 
+<b>Population:</b> <%= @hive_day['population'] %><br/>
+<b>Population Cumulative:</b> <%= @hive_day['population_cumulative'] %><br/>
+<b>Production:</b> <%= @hive_day['production'] %><br/>
+<b>Production Cumulative:</b> <%= @hive_day['production_cumulative'] %><br/>
+<%
+  snapshots = JSON.parse(@hive_day['data_snapshots'])
+  low_res = snapshots.pop
+  low_res = low_res.reverse
+%>
+<b>Beginning of Day Weight:</b> <%= low_res.pop %><br/>
+<b>Middle of Day Weight:</b> <%= low_res.pop %><br/>
+<b>End of Day Weight</b> <%= low_res.pop %><br/><br/>
+
+<table>
+  <tr>
+    <th colspan="2">Snapshots</th>
+  </tr>
+  <tr>
+    <th>Date and Time</th>
+    <th>Weight</th>
+  </tr>
+  <% snapshots.each do |snapshot| %>
+  <tr>
+    <td><%= Time.at(snapshot["date_time"].to_i) %></td>
+    <td><%= snapshot["weight"] %></td>
+  </tr>
+  <% end %>
+</table>
