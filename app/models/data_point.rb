@@ -6,9 +6,9 @@ class DataPoint < AWS::Record::HashModel
   # events, and to kick off HiveDays tasks
   def self.review(data)
     puts "---------------"
-    puts data.to_xml
+    puts data.to_json
     puts "---------------"
-    puts data[:date_time]
+    #puts data[:date_time]
     puts "---------------"
     if data["event"]
       # create new hive_event
