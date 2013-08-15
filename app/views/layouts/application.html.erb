@@ -7,7 +7,21 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+<h1>Apiara</h1>
+<% if user_signed_in? %>
+<%= link_to "Show All Users", users_path %> | 
+<%= link_to "Show All Devices", all_devices_path %> | 
+<%= link_to "Show All Hives", all_hives_path %> | 
+<%= link_to "Show All HiveDays", hivedays_path %> | 
+<%= link_to "Show All HiveDays For Hive 'sample' From 7/10/2013 through 7/17/2013", 
+    hive_days_range_path("sample", Time.new(2013, 7, 10).to_i, Time.new(2013, 7, 18).to_i) %><br/>
+Signed in as <%= current_user.first_name %> <%= current_user.last_name %> | 
+<%= link_to("Sign Out", destroy_user_session_path, :method => :delete) %> | 
+<%= link_to "Your Devices", devices_path %> | 
+<%= link_to "Your Hives", hives_path %>
+<% else %>
+<%= link_to('Sign Up', new_user_registration_path) %> | <%= link_to('Sign In', new_user_session_path) %>
+<% end %>
 <%= yield %>
 
 </body>
