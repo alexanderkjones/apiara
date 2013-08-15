@@ -8,7 +8,7 @@ class DataPoint < AWS::Record::HashModel
     puts "---------------"
     puts data.to_json
     puts "---------------"
-    #puts data[:date_time]
+    puts data["value"]["date_time"]
     puts "---------------"
     if data["event"]
       # create new hive_event
