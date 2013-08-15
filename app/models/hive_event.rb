@@ -7,11 +7,16 @@ class HiveEvent < AWS::Record::HashModel
   string_attr :details  
 
   #create new hive event
-  def self.new_event(hive_id, data_snapshot, type, details)
+#  def self.new_event(hive_id, data_snapshot, type, details)
+  def self.new_event(data)
     #create new HiveEvent record
-    hiveday = HiveEvent.create(:id => hive_id, :date_time => Time.now.to_i, :data_snapshot => data_snapshot,
-                                :type => type, :details => details)
-    hiveday.save
+    DataPoint.create(:id => data["value"]["id"], :date_time => data["value"]["date_time"],
+                  :voltage => data["value"]["voltage"], :weight => data["value"]["weight"],
+                  :temp => data["value"]["temp"], :event => data["value"]["event"])
+
+    # hiveday = HiveEvent.create(:id => hive_id, :date_time => Time.now.to_i, :data_snapshot => data_snapshot,
+                                # :type => type, :details => details)
+    # hiveday.save
   end
   
   #this method will send alert emails to users based on what event is reported

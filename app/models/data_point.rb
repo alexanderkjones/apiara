@@ -14,9 +14,8 @@ class DataPoint < AWS::Record::HashModel
     puts "---------------"
     puts data["value"]["date_time"]
     puts "---------------"
-    if data["value"]["event"]
-      # create new hive_event
-      # HiveEvent.new(blah)
+    if data["value"]["event"] != "clear"
+      HiveEvent.new_event(data)
     end
     
     # add to raw data store
