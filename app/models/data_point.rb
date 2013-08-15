@@ -16,7 +16,7 @@ class DataPoint < AWS::Record::HashModel
     # add to raw data store
     # DataPoint.new(blah)
     
-    time = Time.at(data["date_time"])
+    time = Time.at(data["date-time"])
     # check if at end of the day. if true, start HiveDays tasks
     #if time.hour == 23 && time.min >= 55
     #  HiveDay.daily_tasks(data["hive_id"])
