@@ -10,9 +10,8 @@ class HiveEvent < AWS::Record::HashModel
 #  def self.new_event(hive_id, data_snapshot, type, details)
   def self.new_event(data)
     #create new HiveEvent record
-    DataPoint.create(:id => data["value"]["id"], :date_time => data["value"]["date_time"],
-                  :voltage => data["value"]["voltage"], :weight => data["value"]["weight"],
-                  :temp => data["value"]["temp"], :event => data["value"]["event"])
+    HiveEvent.create(:id => data["value"]["id"], :date_time => data["value"]["date_time"], :data_snapshot => data_snapshot, 
+                      :type => data["value"]["event"], :details => "details")
 
     # hiveday = HiveEvent.create(:id => hive_id, :date_time => Time.now.to_i, :data_snapshot => data_snapshot,
                                 # :type => type, :details => details)
@@ -21,16 +20,15 @@ class HiveEvent < AWS::Record::HashModel
   
   #this method will send alert emails to users based on what event is reported
   def self.send_alert(type)
-    #i would be willing to bet there is a MUCH better way to do this part...
-    ses = AWS::SimpleEmailService.new(:access_key_id => 'AKIAIGCGEKV7NX5VQDGA',
-                                      :secret_access_key => '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')
+    ses = AWS::SimpleEmailService.new
+    
     case type
     when "low_battery"
       #low battery
       ses.send_email(
         :subject => 'Low Battery',
         :from => 'hello@apiara.com',
-        :to => 'user@email.com',
+        :to => 'awmitchell@email.com',
         :body_text => 'Your battery is low.',
         :body_html => 'Your battery is low.')
     when "lost_bees"
@@ -38,7 +36,7 @@ class HiveEvent < AWS::Record::HashModel
       ses.send_email(
         :subject => 'Lost Bees',
         :from => 'hello@apiara.com',
-        :to => 'user@email.com',
+        :to => 'awmitchell@email.com',
         :body_text => 'Your just lost 3 lbs. of bees.',
         :body_html => 'Your just lost 3 lbs. of bees.')
     when "nectar_flow"
@@ -46,7 +44,7 @@ class HiveEvent < AWS::Record::HashModel
       ses.send_email(
         :subject => 'Nectar Is Flowing!',
         :from => 'hello@apiara.com',
-        :to => 'user@email.com',
+        :to => 'awmitchell@email.com',
         :body_text => 'Nectar is flowing! Your hive just gained 2 lbs.',
         :body_html => 'Nectar is flowing! Your hive just gained 2 lbs.')
     end
