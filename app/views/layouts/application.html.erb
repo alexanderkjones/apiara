@@ -17,6 +17,7 @@
     hive_days_range_path("sample", Time.new(2013, 7, 10).to_i, Time.new(2013, 7, 18).to_i) %><br/>
 Signed in as <%= current_user.first_name %> <%= current_user.last_name %> | 
 <%= link_to("Sign Out", destroy_user_session_path, :method => :delete) %> | 
+<%= link_to("Dashboard", hive_days_dash_path) %> | 
 <%= link_to "Your Devices", devices_path %> | 
 <%= link_to "Your Hives", hives_path %>
 <% else %>

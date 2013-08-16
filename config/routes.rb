@@ -16,6 +16,7 @@ Apiara::Application.routes.draw do
 
   devise_for :users
   match 'users', :to => 'users#index'
+  match 'user_root', :to => 'hive_days#dash'
   
   match 'data_points', :to => 'data_points#index'
 
