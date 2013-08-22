@@ -21,8 +21,8 @@ class DataPoint < AWS::Record::HashModel
     time = Time.at(data["value"]["date_time"])
     # check if at end of the day. if true, start HiveDays tasks
     if time.hour == 23 && time.min >= 55
-     # once we hook up the hive_id, we can do this
-     # HiveDay.daily_tasks(data["hive_id"])
+      hiveid = Device.find_by_id(data["value"]["id"]).hiveid
+      HiveDay.daily_tasks(hiveid)
     end
   end
 end

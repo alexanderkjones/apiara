@@ -47,16 +47,22 @@ class HiveDay < AWS::Record::HashModel
       the_array.push(item_data.attributes)
     end
     
-    population_cumulative = calc_new_population_cumulative(population, the_array.first["population_cumulative"])
-    production_cumulative = calc_new_production_cumulative(production, the_array.first["production_cumulative"])
-    max_population = calc_max_population(population_cumulative,the_array.first["max_population"])
-    
-    #create new HiveDay record
-    hiveday = HiveDay.create(:id => hive_id, :date_time => Time.now.to_i, :population => population, 
-                              :population_cumulative => population_cumulative, :production => production, 
-                              :production_cumulative => production_cumulative, :max_population => max_population,
-                              :data_snapshots => snapshots)
-    hiveday.save
+    unless the_array.nil?
+      population_cumulative = calc_new_population_cumulative(population, the_array.first["population_cumulative"])
+      production_cumulative = calc_new_production_cumulative(production, the_array.first["production_cumulative"])
+      max_population = calc_max_population(population_cumulative,the_array.first["max_population"])
+      
+      #create new HiveDay record
+      hiveday = HiveDay.create(:id => hive_id, :date_time => Time.now.to_i, :population => population, 
+                                :population_cumulative => population_cumulative, :production => production, 
+                                :production_cumulative => production_cumulative, :max_population => max_population,
+                                :data_snapshots => snapshots)
+    else #no previous HiveDay exists
+      HiveDay.create(:id => hive_id, :date_time => Time.now.to_i, :population => population, 
+                      :population_cumulative => population, :production => production, 
+                      :production_cumulative => production, :max_population => population,
+                      :data_snapshots => snapshots)
+    end
   end
   
   #gets the 288 data points for yesterday
