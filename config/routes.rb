@@ -4,6 +4,8 @@ Apiara::Application.routes.draw do
 
 #  resources :hive_days
 
+  match 'unauthorized', :to => 'home#unauthorized'
+
   match 'hivedays', :to => 'hive_days#index'
   match 'hivedays/:hiveid/:datetime_low/:datetime_high', :to => 'hive_days#hive_days_range', :as => 'hive_days_range'
   match 'hivedays/dash', :to => 'hive_days#dash', :as => 'hive_days_dash'

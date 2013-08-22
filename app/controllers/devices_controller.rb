@@ -2,11 +2,15 @@ class DevicesController < ApplicationController
   before_filter :authenticate_user!, :except => [:all_devices, :show]
 
   def all_devices
-    @devices = Device.all
-
-    respond_to do |format|
-      format.html # all_devices.html.erb
-      format.json { render json: @devices }
+    if current_user.admin?
+      @devices = Device.all
+  
+      respond_to do |format|
+        format.html # all_devices.html.erb
+        format.json { render json: @devices }
+      end
+    else
+      redirect_to unauthorized_path
     end
   end
 
@@ -31,11 +35,15 @@ class DevicesController < ApplicationController
   # GET /devices/new
   # GET /devices/new.json
   def new
-    @device = Device.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @device }
+    if current_user.admin?
+      @device = Device.new
+  
+      respond_to do |format|
+        format.html # new.html.erb
+        format.json { render json: @device }
+      end
+    else
+      redirect_to unauthorized_path
     end
   end
 

@@ -2,11 +2,15 @@ class HivesController < ApplicationController
   before_filter :authenticate_user!, :except => [:all_hives, :show]
 
   def all_hives
-    @hives = Hive.all
-
-    respond_to do |format|
-      format.html # all_hives.html.erb
-      format.json { render json: @hives }
+    if current_user.admin?
+      @hives = Hive.all
+  
+      respond_to do |format|
+        format.html # all_hives.html.erb
+        format.json { render json: @hives }
+      end
+    else
+      redirect_to unauthorized_path
     end
   end
 
@@ -33,11 +37,15 @@ class HivesController < ApplicationController
   # GET /hives/new
   # GET /hives/new.json
   def new
-    @hive = Hive.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @hive }
+    if current_user.admin?
+      @hive = Hive.new
+  
+      respond_to do |format|
+        format.html # new.html.erb
+        format.json { render json: @hive }
+      end
+    else
+      redirect_to unauthorized_path
     end
   end
 
