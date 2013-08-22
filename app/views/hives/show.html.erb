@@ -7,7 +7,7 @@
  
 <p>
   <b>Hive ID:</b>
-  <%= @hive.id %>
+  <%= @hive.hiveid %>
 </p>
  
 <p>
@@ -19,5 +19,29 @@
   <b>Details:</b>
   <%= @hive.details %>
 </p>
- 
+
+<%= form_for @hive, url: {action: 'pair_device'} do |f| %>
+  <% if @hive.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@hive.errors.count, "error") %> prohibited this hive from being saved:</h2>
+
+      <ul>
+      <% @hive.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <hr/><br/>
+  
+  <%= hidden_field_tag :id, @hive.id %>
+  
+  <div><b><%= f.label :deviceid, "Pair Device" %></b>: <%= f.text_field :deviceid %> <%= f.submit "Pair Device" %></div>
+  
+<!--  <div><%= f.label :deviceid %><br />
+  <%= f.text_field :deviceid, :autofocus => true %></div>-->
+
+<% end %>
+
 <%= link_to 'Back', hives_path %>

@@ -1,5 +1,5 @@
 class DevicesController < ApplicationController
-  before_filter :authenticate_user!, :except => [:all_devices, :show]
+  before_filter :authenticate_user!
 
   def all_devices
     if current_user.admin?

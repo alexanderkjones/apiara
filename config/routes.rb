@@ -15,6 +15,7 @@ Apiara::Application.routes.draw do
 
   resources :hives
   match 'all_hives', :to => 'hives#all_hives'
+  match 'pair_device', :to => 'hives#pair_device'
 
   devise_for :users
   match 'users', :to => 'users#index'

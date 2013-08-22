@@ -1,5 +1,5 @@
 class HivesController < ApplicationController
-  before_filter :authenticate_user!, :except => [:all_hives, :show]
+  before_filter :authenticate_user!
 
   def all_hives
     if current_user.admin?
@@ -96,6 +96,31 @@ class HivesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to hives_url }
       format.json { head :no_content }
+    end
+  end
+  
+  def pair_device
+    @device = Device.first(:where => {:deviceid => params[:hive][:deviceid]})
+
+    unless @device.nil?
+      @hive = Hive.find(params[:id])
+      @hive.deviceid = params[:hive][:deviceid]
+      
+      @device.hiveid = @hive.hiveid
+
+      respond_to do |format|
+        if @hive.save && @device.save
+          format.html { redirect_to @hive, notice: 'Hive was successfully paired.' }
+        else
+          format.html { render action: "show" }
+        end
+      end
+    else
+      @hive = Hive.find(params[:id])
+      
+      respond_to do |format|
+        format.html { redirect_to @hive, notice: 'Provided Device ID does not exist.' }
+      end
     end
   end
 end
