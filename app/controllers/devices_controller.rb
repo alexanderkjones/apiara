@@ -55,8 +55,8 @@ class DevicesController < ApplicationController
   # POST /devices
   # POST /devices.json
   def create
-    @device = Device.new(:userid => current_user.id, :hiveid => params[:device][:hiveid], :state => params[:device][:state],
-                          :version => params[:device][:version], :details => params[:device][:details])
+    @device = Device.new(:userid => current_user.id, :deviceid => params[:device][:deviceid], :hiveid => params[:device][:hiveid], 
+                          :state => params[:device][:state], :version => params[:device][:version], :details => params[:device][:details])
 #    @device = Device.new(params[:device])
 
     respond_to do |format|

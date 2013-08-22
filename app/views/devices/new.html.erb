@@ -15,14 +15,16 @@
     </div>
   <% end %>
   
-  <p>This form will be filled out with more stuff later.<br/>
+<!--  <p>This form will be filled out with more stuff later.<br/>
     For now, userid is handled in the controller (that<br/>
     never needs to be seen by the user), and there is no<br/>
-    stats stuff happening.</p>
+    stats stuff happening.</p>-->
   
-  <!-- maybe make this a dropdown of all available hives? -->
-  <div><%= f.label :hiveid %><br />
-  <%= f.text_field :hiveid, :autofocus => true %></div>
+  <div><%= f.label :deviceid %><br/>
+  <%= f.text_field :deviceid %></div>
+
+<!--  <div><%= f.label :hiveid %><br />
+  <%= f.text_field :hiveid, :autofocus => true %></div>-->
 
   <div><%= f.label :state %><br />
   <%= f.text_field :state %></div>

@@ -2,6 +2,7 @@
 
 <table>
   <tr>
+    <th>Hive ID</th>
     <th>Device ID</th>
     <th>User ID</th>
     <th>Details</th>
@@ -10,6 +11,7 @@
 
 <% @hives.each do |hive| %>
   <tr>
+    <td><%= hive.hiveid %></td>
     <td><%= hive.deviceid %></td>
     <td><%= hive.userid %></td>
     <td><%= hive.details %></td>

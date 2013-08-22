@@ -57,7 +57,8 @@ class HivesController < ApplicationController
   # POST /hives
   # POST /hives.json
   def create
-    @hive = Hive.new(:userid => current_user.id, :deviceid => params[:hive][:deviceid], :details => params[:hive][:details])
+    @hive = Hive.new(:userid => current_user.id, :hiveid => params[:hive][:hiveid], 
+                      :deviceid => params[:hive][:deviceid], :details => params[:hive][:details])
 
     respond_to do |format|
       if @hive.save
