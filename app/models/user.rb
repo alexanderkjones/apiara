@@ -17,6 +17,8 @@ class User < AWS::Record::Model
   string_attr :current_sign_in_ip
   string_attr :last_sign_in_ip
   
+  boolean_attr :admin
+  
   # string_attr :confirmation_token
   # datetime_attr :confirmed_at
   # datetime_attr :confirmation_sent_at
