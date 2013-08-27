@@ -10,8 +10,8 @@ class HiveEvent < AWS::Record::HashModel
 #  def self.new_event(hive_id, data_snapshot, type, details)
   def self.new_event(data)
     #create new HiveEvent record
-    HiveEvent.create(:id => data["value"]["id"], :date_time => data["value"]["date_time"], :data_snapshot => data_snapshot, 
-                      :type => data["value"]["event"], :details => "details")
+    HiveEvent.create(:id => data["value"]["id"], :date_time => data["value"]["date_time"], :data_snapshot => data["value"]["weight"], 
+                      :type => data["value"]["event"], :details => "details") # data_snapshot will be the weight at the time of the event
 
     # hiveday = HiveEvent.create(:id => hive_id, :date_time => Time.now.to_i, :data_snapshot => data_snapshot,
                                 # :type => type, :details => details)
