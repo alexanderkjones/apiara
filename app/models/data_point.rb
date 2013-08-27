@@ -9,7 +9,7 @@ class DataPoint < AWS::Record::HashModel
   # pick through sent data to get raw data,
   # events, and to kick off HiveDays tasks
   def self.review(data)
-    if data["value"]["event"]
+    unless data["value"]["event"].blank?
       puts "------------------"
       puts data["value"]["event"]
       puts "------------------"
