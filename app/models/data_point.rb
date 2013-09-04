@@ -10,9 +10,6 @@ class DataPoint < AWS::Record::HashModel
   # events, and to kick off HiveDays tasks
   def self.review(data)
     unless data["value"]["event"].blank?
-      puts "------------------"
-      puts data["value"]["event"]
-      puts "------------------"
       HiveEvent.new_event(data)
     end
     
@@ -23,7 +20,10 @@ class DataPoint < AWS::Record::HashModel
     
     time = Time.at(data["value"]["date_time"])
     # check if at end of the day. if true, start HiveDays tasks
-    if time.hour == 23 && time.min >= 55
+    if time.hour == 19 && time.min >= 30
+      puts "----------------"
+      puts "HI"
+      puts "----------------"
       hiveid = Device.find_by_id(data["value"]["id"]).hiveid
       HiveDay.daily_tasks(hiveid)
     end
