@@ -72,11 +72,11 @@ class HiveDay < AWS::Record::HashModel
     table = db.tables['apiara_development_DataPoint']
     
     table.hash_key = [:id, :string]
-    table.range_key = [:date_time, :number]
+    table.range_key = [:date_time, :string]
     
     #12am to 11:59:59pm
-    range_low = Time.local(1.day.ago.year,1.day.ago.month,1.day.ago.day,0,0).to_i
-    range_high = Time.local(1.day.ago.year,1.day.ago.month,1.day.ago.day,23,59,59).to_i
+    range_low = Time.local(1.day.ago.year,1.day.ago.month,1.day.ago.day,0,0).to_i.to_s
+    range_high = Time.local(1.day.ago.year,1.day.ago.month,1.day.ago.day,23,59,59).to_i.to_s
     
     #top one uses sample data, bottom one will be for production
     #collection = table.items.query(:hash_value => hive_id, :range_value => 1366430400..1366516799, :select => [:date_time, :weight, :event])
