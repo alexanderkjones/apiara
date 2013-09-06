@@ -28,7 +28,8 @@ class DataPoint < AWS::Record::HashModel
       puts "----------------"
       puts "HI"
       puts "----------------"
-      hiveid = Device.find_by_id(data["value"]["id"]).hiveid
+      hiveid = Device.find(:first, :where => {:id => data["value"]["id"]}).hiveid
+      # hiveid = Device.find_by_id(data["value"]["id"]).hiveid
       HiveDay.daily_tasks(hiveid)
     end
   end
