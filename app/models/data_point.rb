@@ -19,6 +19,10 @@ class DataPoint < AWS::Record::HashModel
                       :temp => data["value"]["temp"], :event => data["value"]["event"])
     
     time = Time.at(data["value"]["date_time"])
+    puts "---time---"
+    puts time.hour
+    puts time.min
+    puts "----------"
     # check if at end of the day. if true, start HiveDays tasks
     if time.hour == 12 && time.min >= 26
       puts "----------------"
