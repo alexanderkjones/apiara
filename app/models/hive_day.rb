@@ -95,6 +95,7 @@ class HiveDay < AWS::Record::HashModel
     # calculates how much evaporation occurs in the morning from 12am to 5am
     weight_array = []
     #12am to 5am
+    puts day_points.length
     puts "---morning evap---"
     (0..60).each do |f|
       puts day_points[f]
