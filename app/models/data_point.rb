@@ -19,15 +19,8 @@ class DataPoint < AWS::Record::HashModel
                       :temp => data["value"]["temp"], :event => data["value"]["event"])
     
     time = Time.at(data["value"]["date_time"])
-    puts "---time---"
-    puts time.hour
-    puts time.min
-    puts "----------"
     # check if at end of the day. if true, start HiveDays tasks
-    if time.hour == 16 && time.min >= 26
-      puts "----------------"
-      puts "HI"
-      puts "----------------"
+    if time.hour == 23 && time.min >= 54
       hiveid = Device.find(:first, :where => {:deviceid => data["value"]["id"]}).hiveid
       # hiveid = Device.find_by_id(data["value"]["id"]).hiveid
       HiveDay.daily_tasks(hiveid)
