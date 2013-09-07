@@ -71,6 +71,8 @@ class HiveDay < AWS::Record::HashModel
     # table = db.tables['hive_data_store']
     table = db.tables['apiara_development_DataPoint']
     
+    device_id = Device.find(:first, :where => {:hiveid => hive_id}).deviceid
+    
     table.hash_key = [:id, :string]
     table.range_key = [:date_time, :string]
     
@@ -80,7 +82,7 @@ class HiveDay < AWS::Record::HashModel
     
     #top one uses sample data, bottom one will be for production
     #collection = table.items.query(:hash_value => hive_id, :range_value => 1366430400..1366516799, :select => [:date_time, :weight, :event])
-    collection = table.items.query(:hash_value => hive_id, :range_value => range_low..range_high, :select => [:date_time, :weight])
+    collection = table.items.query(:hash_value => device_id, :range_value => range_low..range_high, :select => [:date_time, :weight])
 
     array = []
     
