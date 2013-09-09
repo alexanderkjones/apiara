@@ -9,6 +9,9 @@ Apiara::Application.routes.draw do
   match 'hivedays', :to => 'hive_days#index'
   match 'hivedays/:hiveid/:datetime_low/:datetime_high', :to => 'hive_days#hive_days_range', :as => 'hive_days_range'
   match 'hivedays/dash', :to => 'hive_days#dash', :as => 'hive_days_dash'
+  match 'hivedays/initial_dash_data', :to => 'hive_days#initial_dash_data', :as => 'initial_dash_data'
+  match 'hivedays/initial_dash_data/:id', :to => 'hive_days#initial_dash_data', :as => 'initial_dash_data'
+  match 'hivedays/extra_dash_data', :to => 'hive_days#extra_dash_data', :as => 'extra_dash_data'
 
   resources :devices
   match 'all_devices', :to => 'devices#all_devices'
