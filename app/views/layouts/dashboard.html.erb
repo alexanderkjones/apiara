@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Apiara Dashboard</title>
+  <%= javascript_include_tag "d3.v3" %>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/dashboard.css" media="screen" />
+  <script src="/javascripts/jquery-1.7.2.min.js" type="text/javascript"></script>
+
+  <%= csrf_meta_tags %>
+</head>
+<body>
+    <div id="wrapper">
+      <div id="top_bar">
+        Apiara
+      </div>
+      <div id="main_container">
+        <div id="main">
+          <%= yield %>
+        </div>
+      <br class="clear"/>
+      </div>
+      <div id="copyright_bar"></div>
+    </div>
+</body>
+</html>

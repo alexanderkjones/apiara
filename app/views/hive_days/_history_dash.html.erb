@@ -1,0 +1,51 @@
+<script type="text/javascript">
+//
+// bar graph
+//
+
+// Data
+var dataset = [];
+for (var i=0; i<50; i++){
+  var num = Math.round(Math.random() * 20)+7;
+  dataset.push(num);
+}
+
+//Width and Height
+var w = 800;
+var h = 100;
+var gap = 1;
+
+//Create SVG Element
+var svg = d3.select("#dash_content")
+          .append("svg")
+          .attr("width", w)
+          .attr("height", h);
+
+var bars = svg.selectAll("rect")
+           .data(dataset)
+           .enter()
+           .append("rect")
+           .attr("x", 0)
+           .attr("y", function(d, i){
+              return h-d*3;
+           })
+           .attr("width", function(d, i){
+              return (w/2)/dataset.length;// - gap;
+           })
+           .attr("height", 0)
+           .attr("fill", "teal")
+           .attr("opacity", function(d,i){
+              return Math.round(d)/100 + 0.2;
+           })
+           .transition()
+           .attr("height", function(d, i){
+              return d*3;
+           })
+           .attr("x", function(d, i){
+             return i * (w/dataset.length);
+           })
+           .duration(function(d,i){
+            return i*200;
+          })
+           .delay(100);
+</script>
