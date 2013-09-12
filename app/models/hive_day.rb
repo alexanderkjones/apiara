@@ -54,7 +54,7 @@ class HiveDay < AWS::Record::HashModel
     puts "------------------"
     
     
-    unless the_array.nil?
+    unless the_array.length == 0
       population_cumulative = calc_new_population_cumulative(population, the_array.first["population_cumulative"])
       production_cumulative = calc_new_production_cumulative(production, the_array.first["production_cumulative"])
       max_population = calc_max_population(population_cumulative,the_array.first["max_population"])
