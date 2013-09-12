@@ -47,6 +47,13 @@ class HiveDay < AWS::Record::HashModel
       the_array.push(item_data.attributes)
     end
     
+    puts "----array nil?----"
+    puts the_array.length
+    puts the_array.nil?
+    puts the_array
+    puts "------------------"
+    
+    
     unless the_array.nil?
       population_cumulative = calc_new_population_cumulative(population, the_array.first["population_cumulative"])
       production_cumulative = calc_new_production_cumulative(production, the_array.first["production_cumulative"])
