@@ -13,17 +13,22 @@ class HiveDay < AWS::Record::HashModel
   
   def self.daily_tasks(hive_id)
     day_points = get_day_points(hive_id)
+    puts "Day Points: #{day_points}"
     #12am to 5am
     morning_evaporation = get_morning_evaporation(day_points)
+    puts "Morning Evaporation: #{morning_evaporation}"
 
     #5am to min
     population = calc_population(day_points)
+    puts "Population: #{population}"
     
     #night evaporation from sundown to midnight
     night_evaporation = get_night_evaporation(day_points)
+    puts "Night Evaporation: #{night_evaporation}"
     
     #5am to max
     production = calc_production(day_points) - night_evaporation
+    puts "Production: #{production}"
 
     #create snapshots for display
     snapshots = create_snapshots(day_points, 100)
@@ -101,6 +106,10 @@ class HiveDay < AWS::Record::HashModel
       weight_array.push(day_points[f]["weight"])
     end
     
+    puts "--IN MORNING EVAPORATION--"
+    puts "First Weight: #{weight_array.first.to_f}"
+    puts "Second Weight: #{weight_array.last.to_f}"
+    
     return weight_array.first.to_f - weight_array.last.to_f
   end
 
@@ -110,6 +119,10 @@ class HiveDay < AWS::Record::HashModel
     (60..(day_points.size-1)).each do |f|
       weight_array.push(day_points[f]["weight"])
     end
+
+    puts "--IN NIGHT EVAPORATION--"
+    puts "First Weight: #{weight_array.max}"
+    puts "Second Weight: #{day_points.last["weight"]}"
     
     return weight_array.max - day_points.last["weight"]
   end
@@ -119,11 +132,18 @@ class HiveDay < AWS::Record::HashModel
     starting_weight = day_points[60]["weight"] #5am
     min_weight = get_day_min(day_points)
     
+    puts "--IN CALC POPULATION--"
+    puts "Staring Weight: #{starting_weight}"
+    puts "Minimum Weight: #{min_weight}"
+    
     return starting_weight - min_weight
   end
   
   def self.calc_new_population_cumulative(population, yesterday_population_cumulative)
     # add sum total population today to yesterday's total population
+    puts "--IN POPULATION CUMULATIVE--"
+    puts "Population: #{population}"
+    puts "Yesterday's Cumulative Population: #{yesterday_population_cumulative}"
     return population + yesterday_population_cumulative
   end
   
@@ -132,17 +152,27 @@ class HiveDay < AWS::Record::HashModel
     starting_weight = day_points[60]["weight"] #5am
     end_weight = get_day_max(day_points)
     
+    puts "--IN CALC PRODUCTION--"
+    puts "End Weight: #{end_weight}"
+    puts "Starting Weight: #{starting_weight}"
+    
     return end_weight - starting_weight
   end
   
   def self.calc_new_production_cumulative(production, yesterday_production_cumulative)
     # add sum total population today to yesterday's total population
+    puts "--IN PRODUCTION CUMULATIVE--"
+    puts "Production: #{production}"
+    puts "Yesterday's Cumulative Production: #{yesterday_production_cumulative}"
     return production + yesterday_production_cumulative
   end
   
   # need to figure out how we want to use this
   # reset seasonally? yearly? monthly?
   def self.calc_max_population(population_cumulative, max_population)
+    puts "--IN MAX POPULATION--"
+    puts "Cumulative Population: #{population_cumulative}"
+    puts "Max Population: #{max_population}"
     return (population_cumulative > max_population) ? population_cumulative : max_population
   end
   
