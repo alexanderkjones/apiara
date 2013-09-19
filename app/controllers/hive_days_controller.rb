@@ -27,38 +27,51 @@ class HiveDaysController < ApplicationController
     
     @the_hash_key = "sample" # make this dynamic later
 #    @range_low = 1.5.days.ago.to_i.to_s
-    @range_low = "1373321899"
+    @range_low = "1376798183"
 #    @range_high = Time.now.to_i.to_s
-    @range_high = "1373321901"
+    @range_high = "1379303785"
     
     #get the latest hive_day
-    @hive_day = []
+    @hive_days = []
     collection = table.items.query(:hash_value => @the_hash_key, :range_value => @range_low..@range_high, 
                                     :select => [:id, :date_time, :population, :population_cumulative,
                                                 :production, :production_cumulative, :data_snapshots])
                                                 
     collection.each do |item_data|
-      @hive_day.push(item_data.attributes)
+      @hive_days.push(item_data.attributes)
+    end
+    
+    @weights = []
+    @hive_days.each do |h|
+#      @hive_day_snapshots = JSON.parse(h["data_snapshots"])
+#      @hive_day_snapshots.pop # pop off summary
+#      temp_weights = []
+#      @hive_day_snapshots.each do |s|
+#        temp_weights.push(s["weight"])
+#      end
+#      @weights.push(temp_weights.max)
+      @weights.push(h["population_cumulative"])
     end
     
     # annoying quirk with how items are queried makes this necessary
-    @hive_day = @hive_day.pop
+    # @hive_day = @hive_day.pop
 
-    @hive_day_snapshots = JSON.parse(@hive_day["data_snapshots"])
-    @hive_day_snapshots.pop # pop off summary
+    # @hive_day_snapshots = JSON.parse(@hive_day["data_snapshots"])
+    # @hive_day_snapshots.pop # pop off summary
     
     
-    @times = []
-    @weights = []
-    @hive_day_snapshots.each do |h|
-      temp_time = Time.at(h["date_time"].to_i)
-      @times.push(temp_time.hour.to_s + ":" + temp_time.min.to_s.rjust(2,'0'))
-      @weights.push(h["weight"])
-    end
+    # @times = []
+    # @weights = []
+    # @hive_day_snapshots.each do |h|
+    #   temp_time = Time.at(h["date_time"].to_i)
+    #   @times.push(temp_time.hour.to_s + ":" + temp_time.min.to_s.rjust(2,'0'))
+    #   @weights.push(h["weight"])
+    # end
 
     respond_to do |format|
 #      format.html # dash.html.erb
-      format.json { render :json => {"times" => @times, "weights" => @weights}, :status => :ok }
+#      format.json { render :json => {"times" => @times, "weights" => @weights}, :status => :ok }
+      format.json { render :json => {"weights" => @weights}, :status => :ok}
 #      format.json { render json: @hive_day }
     end
   end
